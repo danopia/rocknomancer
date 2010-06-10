@@ -1,0 +1,9 @@
+Name: Rocknomancer
+Version: vcs
+Variant: src
+Origin: git://github.com/danopia/rocknomancer.git
+Description: GUI interface to Reincarnate, the package manager for ooc
+SourcePath: .
+Requires: reincarnate/danopia gtk/danopia
+Build: rock rocknomancer
+Binaries: rocknomancer
