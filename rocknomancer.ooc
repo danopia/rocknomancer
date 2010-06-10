@@ -4,7 +4,7 @@ import reincarnate/App
 app := App new()
 
 use gtk
-import gtk/[Gtk, Window, Button, VBox, Entry, Image]
+import gtk/[Gtk, Window, Button, VBox, Label, Image]
 
 import source/Tree/[CellRenderer, CellRendererText, ListStore, View, Iter, Model]
 
@@ -36,7 +36,7 @@ create_view_and_model: func -> TreeView {
   renderer = CellRendererText new()
   view insertColumn(-1, "Version", renderer, "text", 1, null);
 
-  /* --- Column #2 --- */
+  /* --- Column #3 --- */
 
   renderer = CellRendererText new()
   view insertColumn(-1, "Variant", renderer, "text", 2, null);
@@ -54,13 +54,22 @@ create_view_and_model: func -> TreeView {
 
 main: func {
     win := Window new("Rocknomancer Package Manager")
-    win setUSize(400, 550)
+    win setUSize(200, 200)
     win connect("delete_event", exit)
     
+    box := VBox new(false, 8)
+    
+    label := Label new("Installed packages:")
+    box packStart(label, false, false, 0)
+    
     view := create_view_and_model()
+    box packStart(view, true, true, 0)
+    
+    button := Button new("gtk-close")
+    box packStart(button, false, false, 0)
 
-    win setBorderWidth(16)
-    win add(view)
+    win setBorderWidth(8)
+    win add(box)
     win showAll()
     Gtk main()
 }
