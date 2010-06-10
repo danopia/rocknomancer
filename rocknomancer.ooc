@@ -1,25 +1,23 @@
-//use reincarnate
+use reincarnate
+import reincarnate/App
+
+app := App new()
 
 use gtk
 import gtk/[Gtk, Window, Button, VBox, Entry, Image]
 
 import source/Tree/[CellRenderer, CellRendererText, ListStore, View, Iter, Model]
 
+import structs/ArrayList
+
 create_and_fill_model: func -> ListStore {
-  store := ListStore new(2, GType String, GType UInt)
+  store := ListStore new(3, GType String, GType String, GType String)
   iter := TreeIter new()
 
-  /* Append a row and fill in some data */
-  store append(iter)
-  store set(iter, 0, "Heinz El-Mann", 1, 51, -1)
-  
-  /* append another row and fill in some data */
-  store append(iter)
-  store set(iter, 0, "Jane Doe", 1, 23, -1)
-  
-  /* ... and a third row */
-  store append(iter)
-  store set(iter, 0, "Joe Bungop", 1, 91, -1)
+  for (info: ArrayList<String> in app installedPackages()) {
+    store append(iter)
+    store set(iter, 0, info[0], 1, info[1], 2, info[2], -1)
+  }
   
   return store
 }
@@ -31,12 +29,17 @@ create_view_and_model: func -> TreeView {
   /* --- Column #1 --- */
 
   renderer = CellRendererText new()
-  view insertColumn(-1, "Name", renderer, "text", 0, null);
+  view insertColumn(-1, "Package", renderer, "text", 0, null);
 
   /* --- Column #2 --- */
 
   renderer = CellRendererText new()
-  view insertColumn(-1, "Age", renderer, "text", 1, null);
+  view insertColumn(-1, "Version", renderer, "text", 1, null);
+
+  /* --- Column #2 --- */
+
+  renderer = CellRendererText new()
+  view insertColumn(-1, "Variant", renderer, "text", 2, null);
 
   view model = create_and_fill_model()
 
