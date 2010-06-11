@@ -12,7 +12,7 @@ import source/[MainWindow, PackageWindow]
 
 main: func {
     mainWindow := MainWindow new(app)
-    pkgWindow := PackageWindow new(app, "reincarnate")
+    pkgWindow := PackageWindow new(app, "curl")
     
     Gtk main()
 }

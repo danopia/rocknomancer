@@ -2,7 +2,7 @@ use reincarnate
 import reincarnate/[App, Package, Usefile]
 
 use gtk
-import gtk/[Gtk, Window, Button, VBox, HBox, Label]
+import gtk/[Gtk, Widget, Window, Button, VBox, HBox, Label]
 
 import source/Tree/ListStore
 import source/ListView
@@ -43,16 +43,16 @@ PackageWindow: class {
     
     // Create buttons
     btnUpdate = Button new("Update").
-      connect("clicked", update)
+      connect("clicked", update, this as Pointer)
       
     btnReinstall = Button new("Reinstall").
-      connect("clicked", reinstall)
+      connect("clicked", reinstall, this as Pointer)
       
     btnRemove = Button new("Uninstall").
-      connect("clicked", remove)
+      connect("clicked", remove, this as Pointer)
     
     btnClose = Button new("gtk-close").
-      connect("clicked", close)
+      connect("clicked", close, this as Pointer)
     
     // Lay the buttons out
     boxButtons = HBox new(true, 4).
@@ -82,21 +82,21 @@ PackageWindow: class {
     }
   }
   
-  update: func {
-    app update(usefile["_Slug"])
+  update: static func (button: Button, this: This) {
+    this app update(this usefile["_Slug"] as String)
   }
   
-  remove: func {
-    app remove(usefile["_Slug"])
-    close()
+  remove: static func (button: Button, this: This) {
+    this app remove(this usefile["_Slug"] as String)
+    close(button as Widget, this)
   }
   
-  reinstall: func {
-    app remove(usefile["_Slug"])
-    app install(usefile["_Slug"])
+  reinstall: static func (button: Button, this: This) {
+    this app remove(this usefile["_Slug"] as String)
+    this app install(this usefile["_Slug"] as String)
   }
   
-  close: func {
-    wnd destroy()
+  close: static func (trigger: Widget, this: This) {
+    this wnd destroy()
   }
 }
