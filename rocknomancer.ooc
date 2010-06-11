@@ -6,51 +6,10 @@ app := App new()
 use gtk
 import gtk/[Gtk, Window, Button, VBox, Label, Image]
 
-import source/Tree/[CellRenderer, CellRendererText, ListStore, View, Iter, Model]
+import source/Tree/ListStore
+import source/ListView
 
 import structs/ArrayList
-
-create_and_fill_model: func -> ListStore {
-  store := ListStore new(3, GType String, GType String, GType String)
-  iter := TreeIter new()
-
-  for (info: ArrayList<String> in app installedPackages()) {
-    store append(iter)
-    store set(iter, 0, info[0], 1, info[1], 2, info[2], -1)
-  }
-  
-  return store
-}
-
-create_view_and_model: func -> TreeView {
-  view := TreeView new()
-  renderer: CellRenderer
-
-  /* --- Column #1 --- */
-
-  renderer = CellRendererText new()
-  view insertColumn(-1, "Package", renderer, "text", 0, null);
-
-  /* --- Column #2 --- */
-
-  renderer = CellRendererText new()
-  view insertColumn(-1, "Version", renderer, "text", 1, null);
-
-  /* --- Column #3 --- */
-
-  renderer = CellRendererText new()
-  view insertColumn(-1, "Variant", renderer, "text", 2, null);
-
-  view model = create_and_fill_model()
-
-  /* The tree view has acquired its own reference to the
-   *  model, so we can drop ours. That way the model will
-   *  be freed automatically when the tree view is destroyed */
-
-  //g_object_unref(model)
-
-  return view
-}
 
 main: func {
     win := Window new("Rocknomancer Package Manager")
@@ -62,8 +21,17 @@ main: func {
     label := Label new("Installed packages:")
     box packStart(label, false, false, 0)
     
-    view := create_view_and_model()
-    box packStart(view, true, true, 0)
+    view := ListView new()
+    view addColumn("Package", GType String)
+    view addColumn("Version", GType String)
+    view addColumn("Variant", GType String)
+    view setup()
+    
+    for (info: ArrayList<String> in app installedPackages()) {
+      view addRow(info)
+    }
+    
+    box packStart(view view, true, true, 0)
     
     button := Button new("gtk-close")
     box packStart(button, false, false, 0)

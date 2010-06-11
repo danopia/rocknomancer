@@ -7,11 +7,14 @@ import gtk/Gtk
 import source/Tree/[Model, Iter]
 
 ListStore: cover from GtkListStore* extends TreeModel {
-    new: extern(gtk_list_store_new) static func (count: GInt, ...) -> This
+    //new: extern(gtk_list_store_new) static func (count: GInt, ...) -> This
+    new: extern(gtk_list_store_newv) static func (count: GInt, types: GType*) -> This
     
     // Big ol' block of externs :D
     setColumnTypes: extern(gtk_list_store_set_column_types) func (count: GInt, types: GType*)
     set: extern(gtk_list_store_set) func (iter: TreeIter, ...)
+    set: extern(gtk_list_store_set_value) func~value (iter: TreeIter, column: GInt, value: GtkValue*)
+    set: extern(gtk_list_store_set_valuesv) func~values (iter: TreeIter, columns: GInt*, values: GtkValue*, count: GInt)
     remove: extern(gtk_list_store_remove) func (iter: TreeIter)
     insert: extern(gtk_list_store_insert) func (iter: TreeIter, position: GInt)
     insertBefore: extern(gtk_list_store_insert_before) func (iter, sibling: TreeIter)
