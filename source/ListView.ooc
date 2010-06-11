@@ -19,9 +19,7 @@ ListView: class {
   
   setup: func {
     store = ListStore new(columns size(), columnTypes toArray())
-    "2" println()
     view = TreeView new(store)
-    "3" println()
     
     index := 0
     for (column in columns) {
