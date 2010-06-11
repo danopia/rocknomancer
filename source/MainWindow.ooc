@@ -7,12 +7,16 @@ import gtk/[Gtk, Window, Button, VBox, Label]
 import source/Tree/ListStore
 import source/ListView
 
+import source/Menu/[Bar, Item, Menu]
+
 import structs/ArrayList
 
 MainWindow: class {
   app: App
   
   wnd: Window
+  mnuBar: MenuBar
+  mnuFile, mnuEdit, mnuHelp: Menu
   box: VBox
   lblInstalled: Label
   lstInstalled: ListView
@@ -20,6 +24,25 @@ MainWindow: class {
   
   init: func (=app) {
     // Create the widgets
+    
+    mnuFile = Menu new().
+      append(MenuItem new("New")).
+      append(MenuItem new("Save")).
+      append(MenuItem new("Close")).
+      append(MenuItem new("Exit"))
+    
+    mnuEdit = Menu new().
+      append(MenuItem new("Undo")).
+      append(MenuItem new("Redo"))
+    
+    mnuHelp = Menu new().
+      append(MenuItem new("Online docs")).
+      append(MenuItem new("About"))
+    
+    mnuBar = MenuBar new().
+      append(MenuItem new("File", mnuFile)).
+      append(MenuItem new("Edit", mnuEdit)).
+      append(MenuItem new("Help", mnuHelp))
     
     lblInstalled = Label new("Installed packages:")
     
@@ -35,6 +58,7 @@ MainWindow: class {
     
     // Lay them out
     box = VBox new(false, 8).
+      packStart(mnuBar, false, false, 0).
       packStart(lblInstalled, false, false, 0).
       packStart(lstInstalled view, true, true, 0).
       packStart(btnClose, false, false, 0)
