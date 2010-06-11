@@ -8,9 +8,11 @@ import gtk/Gtk
 
 import structs/ArrayList
 
-import source/MainWindow
+import source/[MainWindow, PackageWindow]
 
 main: func {
     mainWindow := MainWindow new(app)
+    pkgWindow := PackageWindow new(app, "reincarnate")
+    
     Gtk main()
 }

@@ -2,7 +2,7 @@ use reincarnate
 import reincarnate/App
 
 use gtk
-import gtk/[Gtk, Window, Button, VBox, Label, Image]
+import gtk/[Gtk, Window, Button, VBox, Label]
 
 import source/Tree/ListStore
 import source/ListView
