@@ -28,7 +28,7 @@ MainWindow: class {
       addColumn("Version", GType String).
       addColumn("Variant", GType String).
       setup()
-    populate_list()
+    populateList()
     
     btnClose = Button new("gtk-close").
       connect("clicked", exit)
@@ -48,7 +48,7 @@ MainWindow: class {
       showAll()
   }
   
-  populate_list: func {
+  populateList: func {
     for (info: ArrayList<String> in app installedPackages()) {
       lstInstalled addRow(info)
     }
