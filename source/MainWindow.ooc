@@ -9,6 +9,8 @@ import source/ListView
 
 import source/Menu/[Bar, Item, Menu]
 
+import source/PackageWindow
+
 import structs/ArrayList
 
 MainWindow: class {
@@ -81,9 +83,17 @@ MainWindow: class {
   
   listClicked: static func (view: TreeView, path, column: Pointer, this: MainWindow) {
     iter := this lstInstalled selectedRow()
-    value := GtkValue new()
-    view model getValue(iter, 0, value)
-    value gstring println()
+    
+    value1 := GtkValue new()
+    view model getValue(iter, 0, value1)
+    
+    value2 := GtkValue new()
+    view model getValue(iter, 1, value2)
+    
+    value3 := GtkValue new()
+    view model getValue(iter, 2, value3)
+    
+    PackageWindow new(app, "%s=%s/%s" format(value1 gstring, value2 gstring, value3 gstring))
   }
 }
 
