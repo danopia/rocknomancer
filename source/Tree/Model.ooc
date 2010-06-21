@@ -4,7 +4,7 @@
 use gtk
 import gtk/[Gtk, _GObject]
 
-import source/Tree/[Iter, Path, ListStore] // ListStore for GType
+import source/Tree/[Iter, Path, ListStore] // ListStore for GtkType
 
 TreeModel: cover from GtkTreeModel* extends _GObject {
   
@@ -16,7 +16,7 @@ TreeModel: cover from GtkTreeModel* extends _GObject {
     get: extern(gtk_tree_model_get_n_columns)
   }
   
-  getColumnType: extern(gtk_tree_model_get_column_type) func (index: GInt) -> GType
+  getColumnType: extern(gtk_tree_model_get_column_type) func (index: GInt) -> GtkType
   getIter: extern(gtk_tree_model_get_iter) func (iter: TreeIter, path: TreePath) -> GBool
   getIter: extern(gtk_tree_model_get_iter_from_string) func~fromString (iter: TreeIter, path_string: GString) -> GBool
   getPath: extern(gtk_tree_model_get_path) func (iter: TreeIter) -> TreePath
@@ -45,24 +45,24 @@ GtkValue: cover from _GtkValue* extends _GObject {
   new: static func -> This {
     gc_malloc(_GtkValue size) as This
   }
-  new: static func~withType (type: GType) -> This {
+  new: static func~withType (type: GtkType) -> This {
     val := new()
     val type = type
     val
   }
-  new: static func~withTypeAndValue (type: GType, value: Pointer) -> This {
+  new: static func~withTypeAndValue (type: GtkType, value: Pointer) -> This {
     val := new()
     val type = type
     val set(type, value)
     val
   }
   
-  compatible?: extern(g_value_type_compatible) static func (a, b: GType) -> GBool
-  transformable?: extern(g_value_type_transformable) static func (a, b: GType) -> GBool
+  compatible?: extern(g_value_type_compatible) static func (a, b: GtkType) -> GBool
+  transformable?: extern(g_value_type_transformable) static func (a, b: GtkType) -> GBool
   
   inited?: extern(G_TYPE_CHECK_VALUE) func -> Bool
   
-  type: GType {
+  type: GtkType {
     get: extern(G_VALUE_TYPE)
     set: extern(g_value_init)
   }
@@ -83,14 +83,14 @@ GtkValue: cover from _GtkValue* extends _GObject {
   compatibleWith?: func~GtkValue (other: GtkValue) -> GBool {
     This compatible?(this type, other type)
   }
-  compatibleWith?: func~GType (other: GType) -> GBool {
+  compatibleWith?: func~GtkType (other: GtkType) -> GBool {
     This compatible?(this type, other)
   }
   
   transformableTo?: func~GtkValue (other: GtkValue) -> GBool {
     This transformable?(this type, other type)
   }
-  transformableTo?: func~GType (other: GType) -> GBool {
+  transformableTo?: func~GtkType (other: GtkType) -> GBool {
     This transformable?(this type, other)
   }
   
@@ -110,26 +110,26 @@ GtkValue: cover from _GtkValue* extends _GObject {
       //case GDouble => gdouble = value as GDouble
       case GString => gstring = value as GString
       case GPointer => gpointer = value as GPointer
-      case GType => gtype = value as GType
+      case GtkType => gtype = value as GtkType
     }
   }
   
-  set: func~GType (type: GType, value: Pointer) {
+  set: func~GtkType (type: GtkType, value: Pointer) {
     match type {
-      case GType Boolean => gbool = (value as GBool*)@
-      case GType Char => gchar = (value as GChar*)@
-      //case GType UChar => guchar = (value as GUChar*)@
-      case GType Int => gint = (value as GInt*)@
-      case GType UInt => guint = (value as GUInt*)@
-      case GType Long => glong = (value as GLong*)@
-      case GType ULong => gulong = (value as GULong*)@
-      //case GType Int64 => gint64 = (value as GInt64*)@
-      //case GType UInt64 => guint64 = (value as GUInt64*)@
-      case GType Float => gfloat = (value as GFloat*)@
-      //case GType Double => gdouble = (value as GDouble*)@
-      case GType String => gstring = (value as GString*)@
-      case GType Pointer => gpointer = (value as GPointer*)@
-      case GType GType => gtype = (value as GType*)@
+      case GtkType Boolean => gbool = (value as GBool*)@
+      case GtkType Char => gchar = (value as GChar*)@
+      //case GtkType UChar => guchar = (value as GUChar*)@
+      case GtkType Int => gint = (value as GInt*)@
+      case GtkType UInt => guint = (value as GUInt*)@
+      case GtkType Long => glong = (value as GLong*)@
+      case GtkType ULong => gulong = (value as GULong*)@
+      //case GtkType Int64 => gint64 = (value as GInt64*)@
+      //case GtkType UInt64 => guint64 = (value as GUInt64*)@
+      case GtkType Float => gfloat = (value as GFloat*)@
+      //case GtkType Double => gdouble = (value as GDouble*)@
+      case GtkType String => gstring = (value as GString*)@
+      case GtkType Pointer => gpointer = (value as GPointer*)@
+      case GtkType GtkType => gtype = (value as GtkType*)@
     }
   }
   
@@ -207,7 +207,7 @@ GtkValue: cover from _GtkValue* extends _GObject {
     set: extern(g_value_set_pointer)
   }
   // object (pointer again, w/ take/dup)
-  gtype: GType {
+  gtype: GtkType {
     get: extern(g_value_get_gtype)
     set: extern(g_value_set_gtype)
   }

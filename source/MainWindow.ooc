@@ -49,9 +49,9 @@ MainWindow: class {
     lblInstalled = Label new("Installed packages:")
     
     lstInstalled = ListView new().
-      addColumn("Package", GType String).
-      addColumn("Version", GType String).
-      addColumn("Variant", GType String).
+      addColumn("Package", GtkType String).
+      addColumn("Version", GtkType String).
+      addColumn("Variant", GtkType String).
       setup()
     populateList()
     lstInstalled view connect("row-activated", listClicked, this as GPointer)

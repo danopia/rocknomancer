@@ -8,10 +8,10 @@ import source/Tree/[Model, Iter]
 
 ListStore: cover from GtkListStore* extends TreeModel {
     //new: extern(gtk_list_store_new) static func (count: GInt, ...) -> This
-    new: extern(gtk_list_store_newv) static func (count: GInt, types: GType*) -> This
+    new: extern(gtk_list_store_newv) static func (count: GInt, types: GtkType*) -> This
     
     // Big ol' block of externs :D
-    setColumnTypes: extern(gtk_list_store_set_column_types) func (count: GInt, types: GType*)
+    setColumnTypes: extern(gtk_list_store_set_column_types) func (count: GInt, types: GtkType*)
     set: extern(gtk_list_store_set) func (iter: TreeIter, ...)
     set: extern(gtk_list_store_set_value) func~value (iter: TreeIter, column: GInt, value: GtkValue*)
     set: extern(gtk_list_store_set_valuesv) func~values (iter: TreeIter, columns: GInt*, values: GtkValue*, count: GInt)
@@ -31,27 +31,27 @@ ListStore: cover from GtkListStore* extends TreeModel {
     toModel: extern(GTK_TREE_MODEL) func -> TreeModel
 }
 
-GType: extern enum {
-  Invalid:    extern(G_TYPE_INVALID)
-  None:       extern(G_TYPE_NONE)
-  Interface:  extern(G_TYPE_INTERFACE)
-  Char:       extern(G_TYPE_CHAR)
-  UChar:      extern(G_TYPE_UCHAR)
-  Boolean:    extern(G_TYPE_BOOLEAN)
-  Int:        extern(G_TYPE_INT)
-  UInt:       extern(G_TYPE_UINT)
-  Long:       extern(G_TYPE_LONG)
-  ULong:      extern(G_TYPE_ULONG)
-  Int64:      extern(G_TYPE_INT64)
-  UInt64:     extern(G_TYPE_UINT64)
-  Enum:       extern(G_TYPE_ENUM)
-  Flags:      extern(G_TYPE_FLAGS)
-  Float:      extern(G_TYPE_FLOAT)
-  Double:     extern(G_TYPE_DOUBLE)
-  String:     extern(G_TYPE_STRING)
-  Pointer:    extern(G_TYPE_POINTER)
-  Boxed:      extern(G_TYPE_BOXED)
-  Param:      extern(G_TYPE_PARAM)
-  Object:     extern(G_TYPE_OBJECT)
-  GType:      extern(G_TYPE_GTYPE)
+GtkType: cover from GType extends Pointer {
+  Invalid:    static extern(G_TYPE_INVALID) GtkType
+  None:       static extern(G_TYPE_NONE) GtkType
+  Interface:  static extern(G_TYPE_INTERFACE) GtkType
+  Char:       static extern(G_TYPE_CHAR) GtkType
+  UChar:      static extern(G_TYPE_UCHAR) GtkType
+  Boolean:    static extern(G_TYPE_BOOLEAN) GtkType
+  Int:        static extern(G_TYPE_INT) GtkType
+  UInt:       static extern(G_TYPE_UINT) GtkType
+  Long:       static extern(G_TYPE_LONG) GtkType
+  ULong:      static extern(G_TYPE_ULONG) GtkType
+  Int64:      static extern(G_TYPE_INT64) GtkType
+  UInt64:     static extern(G_TYPE_UINT64) GtkType
+  Enum:       static extern(G_TYPE_ENUM) GtkType
+  Flags:      static extern(G_TYPE_FLAGS) GtkType
+  Float:      static extern(G_TYPE_FLOAT) GtkType
+  Double:     static extern(G_TYPE_DOUBLE) GtkType
+  String:     static extern(G_TYPE_STRING) GtkType
+  Pointer:    static extern(G_TYPE_POINTER) GtkType
+  Boxed:      static extern(G_TYPE_BOXED) GtkType
+  Param:      static extern(G_TYPE_PARAM) GtkType
+  Object:     static extern(G_TYPE_OBJECT) GtkType
+  GtkType:    static extern(G_TYPE_GTYPE) GtkType
 }

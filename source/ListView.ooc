@@ -7,14 +7,13 @@ import structs/ArrayList
 
 ListView: class {
   columns := ArrayList<String> new()
-  columnTypes := ArrayList<GType> new()
+  columnTypes := ArrayList<GtkType> new()
   store: ListStore
   view: TreeView
   
-  addColumn: func (label: String, type: GType) {
+  addColumn: func (label: String, type: GtkType) {
     columns add(label)
     columnTypes add(type)
-    version(64) { columnTypes add(0) }
   }
   
   setup: func {
@@ -37,14 +36,11 @@ ListView: class {
 
     store append(iter)
     index := 0
-    index2 := 0
     //values := ArrayList<GtkValue> new(cells size)
     for (cell in cells) {
-      value := GtkValue new(columnTypes[index2], cell& as Pointer)
+      value := GtkValue new(columnTypes[index], cell& as Pointer)
       store set(iter, index, value)
       index += 1
-      index2 += 1
-      version(64) { index2 += 1 }
     }
   }
   

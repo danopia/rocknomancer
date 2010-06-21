@@ -35,8 +35,8 @@ PackageWindow: class {
     lblPackage = Label new("Package details:")
     
     lstPackage = ListView new().
-      addColumn("Package", GType String).
-      addColumn("Version", GType String).
+      addColumn("Package", GtkType String).
+      addColumn("Version", GtkType String).
       setup()
     lstPackage view headersVisible? = false
     populateList()
