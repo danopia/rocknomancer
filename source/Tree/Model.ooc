@@ -20,7 +20,7 @@ TreeModel: cover from GtkTreeModel* extends _GObject {
   getIter: extern(gtk_tree_model_get_iter) func (iter: TreeIter, path: TreePath) -> GBool
   getIter: extern(gtk_tree_model_get_iter_from_string) func~fromString (iter: TreeIter, path_string: GString) -> GBool
   getPath: extern(gtk_tree_model_get_path) func (iter: TreeIter) -> TreePath
-  getValue: extern(gtk_tree_model_get_value) func (iter: TreeIter, column: GInt, value: GtkValue*)
+  getValue: extern(gtk_tree_model_get_value) func (iter: TreeIter, column: GInt, value: GtkValue)
   firstIter: extern(gtk_tree_model_get_iter_first) func (iter: TreeIter) -> GBool
   nextIter: extern(gtk_tree_model_iter_next) func (iter: TreeIter) -> GBool
   iterChildren: extern(gtk_tree_model_iter_children) func (iter, parent: TreeIter) -> GBool

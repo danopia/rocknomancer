@@ -4,7 +4,7 @@
 use gtk
 import gtk/[Gtk, Container]
 
-import source/Tree/[ListStore, CellRenderer, Model]
+import source/Tree/[ListStore, CellRenderer, Model, Selection]
 
 TreeView: cover from GtkTreeView* extends Container {
     new: extern(gtk_tree_view_new) static func -> This
@@ -25,9 +25,9 @@ TreeView: cover from GtkTreeView* extends Container {
         set: extern(gtk_tree_view_set_model)
     }
     
-    // selection: TreeSelection {
-    //     get: extern(gtk_tree_view_get_selection)
-    // }
+    selection: TreeSelection {
+        get: extern(gtk_tree_view_get_selection)
+    }
     
     // H/V adjust goes here
     

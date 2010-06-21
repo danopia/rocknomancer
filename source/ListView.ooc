@@ -1,7 +1,7 @@
 use gtk
 import gtk/Gtk
 
-import source/Tree/[CellRenderer, CellRendererText, ListStore, View, Iter, Model]
+import source/Tree/[CellRenderer, CellRendererText, ListStore, View, Iter, Model, Selection]
 
 import structs/ArrayList
 
@@ -28,6 +28,8 @@ ListView: class {
       
       index += 1
     }
+    
+    view selection mode = GtkSelectionMode single
   }
   
   addRow: func (cells: ArrayList<String>) {
@@ -44,5 +46,11 @@ ListView: class {
       index2 += 1
       version(64) { index2 += 1 }
     }
+  }
+  
+  selectedRow: func -> TreeIter {
+    iter := TreeIter new()
+    view selection getSingle((store toModel())&, iter) toString() println()
+    iter
   }
 }

@@ -4,7 +4,7 @@ import reincarnate/App
 use gtk
 import gtk/[Gtk, Window, Button, VBox, Label]
 
-import source/Tree/ListStore
+import source/Tree/[View, ListStore, Iter, Model]
 import source/ListView
 
 import source/Menu/[Bar, Item, Menu]
@@ -52,6 +52,7 @@ MainWindow: class {
       addColumn("Variant", GType String).
       setup()
     populateList()
+    lstInstalled view connect("row-activated", listClicked, this as GPointer)
     
     btnClose = Button new("gtk-close").
       connect("clicked", exit)
@@ -76,6 +77,13 @@ MainWindow: class {
     for (info: ArrayList<String> in app installedPackages()) {
       lstInstalled addRow(info)
     }
+  }
+  
+  listClicked: static func (view: TreeView, path, column: Pointer, this: MainWindow) {
+    iter := this lstInstalled selectedRow()
+    value := GtkValue new()
+    view model getValue(iter, 0, value)
+    value gstring println()
   }
 }
 

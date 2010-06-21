@@ -27,6 +27,8 @@ ListStore: cover from GtkListStore* extends TreeModel {
     swap: extern(gtk_list_store_swap) func (a, b: TreeIter)
     moveBefore: extern(gtk_list_store_move_before) func (iter, position: TreeIter)
     moveAfter: extern(gtk_list_store_move_after) func (iter, position: TreeIter)
+    
+    toModel: extern(GTK_TREE_MODEL) func -> TreeModel
 }
 
 GType: extern enum {
